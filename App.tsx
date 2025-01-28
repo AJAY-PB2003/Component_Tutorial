@@ -1,7 +1,7 @@
+import './gesture-handler';
 import React, { useState } from 'react';
 import {
   Alert,
-  Button,
   FlatList,
   Image,
   Pressable,
@@ -10,7 +10,7 @@ import {
   Text,
   TouchableHighlight,
   View,
-  TextInput
+  TextInput,
 } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Card from './src/components/card';
@@ -20,235 +20,127 @@ import ListContainer from './src/components/ListContainer';
 import SearchTextBar from './src/container/SearchTextBar';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStaticNavigation } from '@react-navigation/native';
+import HomesScreen from './src/screens/Home';
+import DetailsScreen from './src/screens/Details';
+import { Button } from '@react-navigation/elements';
 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import ProfileScreen from './src/screens/ProfileScreen';
+import UserDetailStack from './src/components/UserDetailsNavigator';
 
+const Tab = createBottomTabNavigator();
 
 function App(): React.JSX.Element {
-
-  // imagePressIn();
-  function imagePress() {
-    console.log('Image Pressed successfully');
-
-  }
-  function imagePressIn() {
-    console.log('Image Pressed In successfully');
-
-  }
-  function imagePressOut() {
-    console.log('Image Pressed Out successfully');
-
-  }
-  function imageLongPress() {
-    console.log('Image Long Pressed successfully');
-
-  }
-  function buttonPress() {
-    Alert.alert('Button Pressed successfully');
-
-  }
-  const flexBoxPress = (boxNumber) => {
-    Alert.alert(`Flexbox ${boxNumber} pressed`);
-  }
-
-
-
   return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen
+          name="Users"
+          component={UserDetailStack}
+          options={{
+            tabBarIcon: () => <Icon name="home" size={30} />,
+            headerShown: false,
+            tabBarActiveTintColor:'blue',
+            tabBarBadgeStyle:{
+              backgroundColor:'blue'
+            }
+          }}
+        />
+        {/* <Tab.Screen name="Details" component={DetailsScreen} initialParams={{ firstName: 'User' }} /> */}
+        <Tab.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{ tabBarIcon: () => <Icon name="account" size={30} /> }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
 
-    <SafeAreaView style={{ flex: 1 }}>
-      <Icon name='chevron-right' size={100} />
+    // <NavigationContainer>
+    //   <RootStack/>
+    // </NavigationContainer>
+    // <Navigation/>
 
-      <SearchTextBar />
-      <ListContainer />
-      {/* <UserCard></UserCard> */}
-      {/* <ElevatedCard /> */}
-      {/* <Card /> */}
-      {/* Text properties
-      <View>
-        <Text style={styles.sectionTitle}>hello ,how are you</Text>
-        <Text style={styles.text1} accessibilityHint='name' aria-disabled>My name is Ajay</Text>
-        <Text style={styles.text2}>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum suscipit natus repellat incidunt debitis doloremque, odio rerum animi. Praesentium laudantium repellendus dolor asperiores! Tempore obcaecati aspernatur ipsam debitis sint assumenda?
+    // <SafeAreaView style={{ flex: 1 }}>
 
-        </Text>
-      
-      </View>
-      <View style={styles.view2}>
-        <Text style={styles.text2}>PolicyBazaar</Text>
-
-      </View>
-      <View style={styles.flexView}>
-        <Pressable 
-        onPressIn={imagePressIn}
-        onPressOut={imagePressOut}
-        onLongPress={imageLongPress}
-        onPress={imagePress}>
-        <Image 
-        style={styles.image1}
-        src='https://reactnative.dev/img/tiny_logo.png'/>
-        </Pressable>
-        <Text style={styles.text1}> App Development </Text>
-      </View>
-      <View style={styles.view2}>
-      <Button 
-      title="ClickMe"
-      onPress={buttonPress}
-      color="#f194ff"
-      
-      ></Button>
-      </View>
-      <View>
-        <TouchableHighlight 
-        onPress={buttonPress}
-        underlayColor={'white'}
-        style={styles.touchableButton}> 
-        <Text style={styles.text3}>Press me</Text>
-        
-        </TouchableHighlight>
-      </View> */}
-      {/* Flexbox */}
-      {/* <View style={flexstyles.container}>
-        <View style={[{ backgroundColor: 'blue',}, flexstyles.box]}>
-          <Text style={flexstyles.text}>Box1</Text>
-        </View>
-        <View style={[{ backgroundColor: 'red',}, flexstyles.box]}>
-          <Text style={flexstyles.text}>Box2</Text>
-        </View>
-        <View style={[{ backgroundColor: 'plum',}, flexstyles.box]}>
-          <Text style={flexstyles.text}>Box3</Text>
-        </View>
-        <View style={[{ backgroundColor: 'green', }, flexstyles.box]}>
-          <Text style={flexstyles.text}>Box4</Text>
-        </View>
-        <View style={[{ backgroundColor: 'yellow',}, flexstyles.box]}>
-        <Pressable onPress={()=>flexBoxPress(5)}>
-          <Text style={flexstyles.text}>Box5</Text>
-          </Pressable>
-        </View>
-        <View style={[{ backgroundColor: 'pink',}, flexstyles.box]}>
-          <Pressable onPress={()=>flexBoxPress(6)}>
-          <Text style={flexstyles.text}>Box6</Text>
-          </Pressable>
-        </View>
-        <View style={[{ backgroundColor: 'yellow',}, flexstyles.box]}>
-        <Pressable onPress={()=>flexBoxPress(7)}>
-          <Text style={flexstyles.text}>Box7</Text>
-          </Pressable>
-        </View>
-        <View style={[{ backgroundColor: 'yellow',}, flexstyles.box]}>
-        <Pressable onPress={()=>flexBoxPress(8)}>
-          <Text style={flexstyles.text}>Box8</Text>
-          </Pressable>
-        </View>
-
-      </View> */}
-    </SafeAreaView>
+    // </SafeAreaView>
   );
 }
 
-const flexstyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // flexDirection:'row',
-    // justifyContent: 'space-between',
-    // alignItems:'center',
-    alignContent: 'space-evenly',
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
-    // rowGap:20,
-    // columnGap:20,
-    // gap:50,
-    // position:'relative',
-
-  },
-  box: {
-    height: 200,
-    width: 100,
-    // flexBasis:100,
-
-    justifyContent: 'center'
-
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center'
-  }
-})
-const styles = StyleSheet.create({
-  text3: {
-    color: 'white',
-    fontSize: 15,
-    textAlign: 'center'
-  },
-  touchableButton: {
-    backgroundColor: 'black',
-    width: 200,
-    height: 40,
-    padding: 10,
-    borderRadius: 25,
-
-    alignSelf: 'center'
-
-  },
-  flexView: {
-    flexDirection: 'row',
-    gap: 5,
-    flexWrap: 'wrap',
-
-  },
-  image1: {
-    height: 200,
-    width: 150,
-    borderColor: 'red',
-    borderWidth: 5
-
-
-  },
-
-  text1: {
-    fontSize: 25,
-    fontFamily: 'Cochin',
-    fontWeight: 'bold',
-    textAlign: 'center'
-
-
-  },
-  text2: {
-    fontSize: 20,
-    backgroundColor: 'blue',
-    color: 'white',
-    fontWeight: '800',
-    fontStyle: 'italic',
-    padding: 20,
-    margin: 10,
-    textAlign: 'center',
-
-  },
-  view2: {
-    backgroundColor: 'grey',
-    borderRadius: 32,
-    margin: 10,
-    elevation: 50,
-
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-    backgroundColor: 'blue'
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: 'red',
-    backgroundColor: 'orange'
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
 export default App;
+
+// import React, { useState, useEffect } from 'react';
+// import { View, Text, StyleSheet, ScrollView ,SafeAreaView} from 'react-native';
+
+// const App = () => {
+//   const Arr1 = ['Self', 'Wife', 'Son', 'Daughter'];
+//   const Arr2 = ['Self', 'Son', 'Son', 'Daughter','Daughter','Wife'];
+
+//   // Initialize countMap
+//   let countMap = {};
+
+//   // Count occurrences in Arr1
+//   Arr1.forEach(element => {
+//     countMap[element] = (countMap[element] || 0) + 1;
+//   });
+
+//   // Count occurrences in Arr2
+//   Arr2.forEach(element => {
+//     countMap[element] = (countMap[element] || 0) + 1;
+//   });
+
+//   // State to store filtered tabs (elements with count >= 2 and sum condition for Son and Daughter)
+//   const [tabs, setTabs] = useState([]);
+
+//   useEffect(() => {
+//     // Filter elements with count >= 2
+//     const filteredTabs = Object.keys(countMap)
+//       .filter(key => countMap[key] >= 2)
+//       .filter(key => {
+//         if (key === 'Son' || key === 'Daughter') {
+//           // Check if combined count of Son and Daughter is <= 6
+//           const combinedCount = (countMap['Son'] || 0) + (countMap['Daughter'] || 0);
+//           return combinedCount <= 6;
+//         }
+//         return true;
+//       });
+
+//     setTabs(filteredTabs);
+//   }, []);
+
+//   return (
+//     <SafeAreaView style={styles.container}>
+//       {tabs.length > 0 ? (
+//         tabs.map(tab => (
+//           <View key={tab} style={styles.tab}>
+//             <Text style={styles.tabText}> {tab}</Text>
+//           </View>
+//         ))
+//       ) : (
+//         <Text>No elements with count >= 2 or sum of Son and Daughter count exceeds 6</Text>
+//       )}
+//     </SafeAreaView>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     padding: 20,
+//     backgroundColor: '#f0f0f0',
+//   },
+//   tab: {
+//     backgroundColor: '#4CAF50', // Green background
+//     padding: 15,
+//     marginVertical: 10,
+//     borderRadius: 5,
+//   },
+//   tabText: {
+//     color: 'white',
+//     fontSize: 16,
+//   },
+// });
+
+// export default App;
