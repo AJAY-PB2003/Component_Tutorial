@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { View, FlatList, TextInput, Alert } from 'react-native';
-import UserCard from './UserCard';
+import React from 'react';
+import { FlatList } from 'react-native';
+import UserCard from '../components/UserCard';
 import { DATA } from '../const/data';
 
 type ItemProps = {
@@ -13,7 +13,7 @@ type ItemProps = {
 };
 
 function ListContainer() {
-  const renderItem = ({ item, index }: { item: ItemProps }) => {
+  const renderItem = ({ item }: { item: ItemProps }) => {
     const { id, imgUrl, title, address, socialMedia, socialCount } = item;
 
     return (

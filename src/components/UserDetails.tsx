@@ -3,8 +3,13 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { Alert } from 'react-native';
 
-function UserDetails({ imgUrl, name, address, aboutUs }) {
-  const [review, setReview] = useState('');
+function UserDetails({ imgUrl, name, address, aboutUs, phoneNo, email }) {
+  const [review, setReview] = useState<string | undefined>();
+  const onSubmit = () => {
+    setReview('');
+    Alert.alert('Your Review Successfully Submitted');
+  };
+
   return (
     <View style={userDetailsStyles.container}>
       <View style={userDetailsStyles.basicInfoContainer}>
@@ -15,8 +20,20 @@ function UserDetails({ imgUrl, name, address, aboutUs }) {
           height={100}
         />
         <View>
-          <Text style={userDetailsStyles.normalText}>{name}</Text>
+          <Text
+            style={[
+              userDetailsStyles.normalText,
+              {
+                fontSize: 19,
+                marginBottom: 8,
+                marginTop: 10,
+              },
+            ]}>
+            {name}
+          </Text>
           <Text style={userDetailsStyles.normalText}>{address}</Text>
+          <Text style={userDetailsStyles.normalText}>{phoneNo}</Text>
+          <Text style={userDetailsStyles.normalText}>{email}</Text>
         </View>
       </View>
       <View style={userDetailsStyles.aboutContainer}>
@@ -29,12 +46,9 @@ function UserDetails({ imgUrl, name, address, aboutUs }) {
           style={userDetailsStyles.textInputBox}
           placeholder="Enter Your Review Here"
           value={review}
-          onChange={(text) => setReview(text)}
+          onChange={setReview}
           clearButtonMode="while-editing"
-          onSubmitEditing={() => {
-            setReview('');
-            Alert.alert('Your Review Successfully Submitted');
-          }}
+          onSubmitEditing={onSubmit}
         />
       </View>
     </View>
@@ -66,7 +80,7 @@ const userDetailsStyles = StyleSheet.create({
   },
   normalText: {
     fontSize: 15,
-    padding: 16,
+    padding: 6,
     fontFamily: 'Merriweather-Regular',
   },
   textInputBox: {

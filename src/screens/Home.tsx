@@ -1,13 +1,9 @@
-import React from 'react'
-import { Text, View } from 'react-native'
-import { Button } from '@react-navigation/elements';
-import ListContainer from '../components/ListContainer';
+import React from 'react';
+
+import ListContainer from '../container/ListContainer';
 
 function HomesScreen() {
-
-    return (
-        <ListContainer />
-    )
+  return <ListContainer />;
 }
 
 export default HomesScreen;

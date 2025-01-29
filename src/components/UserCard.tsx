@@ -1,13 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  useWindowDimensions,
-  Pressable,
-} from 'react-native';
+import { View, Image, Text, StyleSheet, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export interface IUserCardProps {
@@ -27,7 +20,6 @@ function UserCard({
   socialMedia,
   socialCount,
 }: IUserCardProps) {
-  const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
 
   const onPress = () => {
@@ -35,29 +27,31 @@ function UserCard({
   };
 
   return (
-    <View style={[userCardStyles.cardContainer]}>
-      <View style={userCardStyles.infoContainer}>
-        {imgUrl ? (
-          <Image src={imgUrl} style={userCardStyles.imageContainer} />
-        ) : null}
+    <Pressable onPress={onPress}>
+      <View style={[userCardStyles.cardContainer]}>
+        <View style={userCardStyles.infoContainer}>
+          {imgUrl ? (
+            <Image src={imgUrl} style={userCardStyles.imageContainer} />
+          ) : null}
 
-        <View style={userCardStyles.detailsContainer}>
-          <Text style={userCardStyles.text}>{title}</Text>
-          <Text style={[userCardStyles.text, { marginTop: 4 }]}>{address}</Text>
-        </View>
+          <View style={userCardStyles.detailsContainer}>
+            <Text style={userCardStyles.text}>{title}</Text>
+            <Text style={[userCardStyles.text, { marginTop: 4 }]}>
+              {address}
+            </Text>
+          </View>
 
-        <Pressable onPress={onPress}>
           <View style={userCardStyles.logoContainer}>
             <Icon name="chevron-right" size={28} />
           </View>
-        </Pressable>
-      </View>
+        </View>
 
-      <View style={userCardStyles.socialDetailsContainer}>
-        <Text style={userCardStyles.text}>{socialMedia}</Text>
-        <Text style={userCardStyles.text}> {socialCount}</Text>
+        <View style={userCardStyles.socialDetailsContainer}>
+          <Text style={userCardStyles.text}>{socialMedia}</Text>
+          <Text style={userCardStyles.text}> {socialCount}</Text>
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
