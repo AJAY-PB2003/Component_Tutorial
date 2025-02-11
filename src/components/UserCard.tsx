@@ -8,6 +8,7 @@ export interface IUserCardProps {
   imgUrl: string | null;
   title?: string | null;
   address?: string | null;
+  phone: string | null;
   socialMedia?: string | null;
   socialCount?: string | null;
 }
@@ -17,6 +18,7 @@ function UserCard({
   imgUrl,
   title,
   address,
+  phone,
   socialMedia,
   socialCount,
 }: IUserCardProps) {
@@ -35,10 +37,9 @@ function UserCard({
           ) : null}
 
           <View style={userCardStyles.detailsContainer}>
-            <Text style={userCardStyles.text}>{title}</Text>
-            <Text style={[userCardStyles.text, { marginTop: 4 }]}>
-              {address}
-            </Text>
+            <Text style={userCardStyles.heading}>{title}</Text>
+            <Text style={[userCardStyles.text]}>{address}</Text>
+            <Text style={userCardStyles.text}>{phone}</Text>
           </View>
 
           <View style={userCardStyles.logoContainer}>
@@ -77,18 +78,28 @@ const userCardStyles = StyleSheet.create({
   },
   detailsContainer: {
     flex: 1,
-    paddingLeft: 12,
+    paddingLeft: 25,
+    paddingTop: 6,
   },
   logoContainer: {
     justifyContent: 'center',
+    paddingRight:16
   },
   socialDetailsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: 16,
+    paddingRight:16,
+    paddingLeft:16,
+  },
+  heading: {
+    fontSize: 18,
+    fontFamily: 'Roboto-Bold',
+    marginBottom: 8,
   },
   text: {
-    fontSize: 17,
+    marginBottom: 5,
+    fontSize: 16,
     // fontWeight: 'bold',
     // fontStyle: 'italic',
     fontFamily: 'Roboto-Bold',

@@ -1,7 +1,7 @@
 import React from 'react';
-import { FlatList } from 'react-native';
 import { Reviews } from '../const/data';
 import ReviewCard from '../components/ReviewCard';
+import CardList from '../components/CardList';
 
 type ItemProps = {
   id: string;
@@ -17,11 +17,10 @@ function ReviewList() {
   };
 
   return (
-    <FlatList
-      data={Reviews}
+    <CardList
+      dataList={Reviews}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-      horizontal={true}
+      horizontalBool={true}
     />
   );
 }

@@ -1,0 +1,1 @@
+export const recipesApi= 'https://dummyjson.com/recipes?limit=0';

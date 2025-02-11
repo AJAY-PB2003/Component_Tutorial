@@ -13,24 +13,9 @@ function UserDetails({ imgUrl, name, address, aboutUs, phoneNo, email }) {
   return (
     <View style={userDetailsStyles.container}>
       <View style={userDetailsStyles.basicInfoContainer}>
-        <Image
-          style={userDetailsStyles.image}
-          src={imgUrl}
-          width={100}
-          height={100}
-        />
-        <View>
-          <Text
-            style={[
-              userDetailsStyles.normalText,
-              {
-                fontSize: 19,
-                marginBottom: 8,
-                marginTop: 10,
-              },
-            ]}>
-            {name}
-          </Text>
+        <Image style={userDetailsStyles.image} src={imgUrl} />
+        <View style={userDetailsStyles.detailContainer}>
+          <Text style={[userDetailsStyles.title]}>{name}</Text>
           <Text style={userDetailsStyles.normalText}>{address}</Text>
           <Text style={userDetailsStyles.normalText}>{phoneNo}</Text>
           <Text style={userDetailsStyles.normalText}>{email}</Text>
@@ -62,33 +47,53 @@ const userDetailsStyles = StyleSheet.create({
   },
   basicInfoContainer: {
     flexDirection: 'row',
+    marginTop: 15,
   },
   image: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+  },
+  detailContainer: {
+    paddingLeft: 25,
   },
   aboutContainer: {
-    paddingTop: 16,
+    padding: 16,
+    marginTop: 50,
+    backgroundColor: 'lightgrey',
+    borderRadius: 25,
   },
   reviewContainer: {
-    paddingTop: 16,
+    // paddingTop: 16,
+    padding: 16,
+    marginTop: 35,
+    // backgroundColor:'lightgrey',
+    borderRadius: 25,
   },
   heading: {
-    fontSize: 21,
+    fontSize: 24,
     fontFamily: 'Roboto-bold',
+    marginBottom: 10,
+  },
+  title: {
+    fontSize: 22,
+    fontFamily: 'Roboto-Regular',
+    paddingTop: 10,
+    marginBottom: 10,
   },
   normalText: {
     fontSize: 15,
-    padding: 6,
+    // padding: 6,
+    paddingBottom: 4,
     fontFamily: 'Merriweather-Regular',
   },
   textInputBox: {
-    margin: 16,
+    // margin: 16,
     padding: 16,
     borderColor: 'grey',
     borderWidth: 2,
     fontSize: 15,
+    borderRadius: 15,
   },
 });
 

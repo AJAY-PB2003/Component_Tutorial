@@ -1,20 +1,23 @@
 import React from 'react';
-import { FlatList } from 'react-native';
 import UserCard from '../components/UserCard';
 import { DATA } from '../const/data';
+import CardList from '../components/CardList';
 
 type ItemProps = {
   id: string;
   imgUrl: string;
   title: string;
   address: string;
+  phoneNo: string;
   socialMedia: string;
   socialCount: string;
 };
 
-function ListContainer() {
+function UserListScreen() {
+  // console.log('User List fetched');
   const renderItem = ({ item }: { item: ItemProps }) => {
-    const { id, imgUrl, title, address, socialMedia, socialCount } = item;
+    const { id, imgUrl, title, address, phoneNo, socialMedia, socialCount } =
+      item;
 
     return (
       <UserCard
@@ -22,19 +25,14 @@ function ListContainer() {
         imgUrl={imgUrl}
         title={title}
         address={address}
+        phone={phoneNo}
         socialMedia={socialMedia}
         socialCount={socialCount}
       />
     );
   };
 
-  return (
-    <FlatList
-      data={DATA}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-    />
-  );
+  return <CardList dataList={DATA} renderItem={renderItem} />;
 }
 
-export default ListContainer;
+export default UserListScreen;
