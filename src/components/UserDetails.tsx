@@ -1,37 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { Alert } from 'react-native';
 
-function UserDetails({ imgUrl, name, address, aboutUs, phoneNo, email }) {
-  const [review, setReview] = useState<string | undefined>();
-  const onSubmit = () => {
-    setReview('');
-    Alert.alert('Your Review Successfully Submitted');
-  };
-
+function UserDetails({ user, onSubmit }) {
   return (
     <View style={userDetailsStyles.container}>
       <View style={userDetailsStyles.basicInfoContainer}>
-        <Image style={userDetailsStyles.image} src={imgUrl} />
+        <Image style={userDetailsStyles.image} src={user.imgUrl} />
         <View style={userDetailsStyles.detailContainer}>
-          <Text style={[userDetailsStyles.title]}>{name}</Text>
-          <Text style={userDetailsStyles.normalText}>{address}</Text>
-          <Text style={userDetailsStyles.normalText}>{phoneNo}</Text>
-          <Text style={userDetailsStyles.normalText}>{email}</Text>
+          <Text style={[userDetailsStyles.title]}>{user.title}</Text>
+          <Text style={userDetailsStyles.normalText}>{user.city}</Text>
+          <Text style={userDetailsStyles.normalText}>{user.phone}</Text>
         </View>
       </View>
       <View style={userDetailsStyles.aboutContainer}>
         <Text style={userDetailsStyles.heading}>About User</Text>
-        <Text style={userDetailsStyles.normalText}>{aboutUs}</Text>
+        <Text style={userDetailsStyles.normalText}>{user.aboutUser}</Text>
       </View>
       <View style={userDetailsStyles.reviewContainer}>
         <Text style={userDetailsStyles.heading}>Review</Text>
         <TextInput
           style={userDetailsStyles.textInputBox}
           placeholder="Enter Your Review Here"
-          value={review}
-          onChange={setReview}
+          // value={text}
           clearButtonMode="while-editing"
           onSubmitEditing={onSubmit}
         />

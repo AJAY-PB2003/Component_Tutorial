@@ -4,22 +4,18 @@ import React, {
   useState,
   useCallback,
   createContext,
-  useReducer,
 } from 'react';
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  ScrollView,
-  Alert,
-  TextInput,
-} from 'react-native';
-import DecrementBtn from './DecrementBtn';
-import UserListScreen from '../screens/UserListScreen';
-import InputBar from './InputBar';
+import { View, Text, Button, StyleSheet, Alert } from 'react-native';
+import DecrementBtn from '../learning/DecrementBtn';
+import UserListScreen from './UserListScreen';
+import InputBar from '../learning/InputBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { increment, selectCount ,decrement} from '../redux/slices/counterslice';
+import {
+  increment,
+  selectCount,
+  decrement,
+} from '../redux/slices/counterslice';
+import SafeAreaViewWrapper from '../components/SafeAreaViewWrapper';
 
 export const DataContext = createContext('Search Here');
 
@@ -39,15 +35,15 @@ export const DataContext = createContext('Search Here');
 //   throw Error('Unknown action: ' + action.type);
 // };
 
-function Parent() {
+function DemoScreen() {
   // const [count, setCount] = useState(0);
   const [data, setData] = useState('Decrement');
   // const [state, dispatch] = useReducer(reducer, { count: 0 });
-  const count= useSelector(selectCount);
-  const dispatch= useDispatch();
+  const count = useSelector(selectCount);
+  const dispatch = useDispatch();
 
-  let refCount = useRef(0);
-  let ref = useRef(null);
+  const refCount = useRef(0);
+  const ref = useRef(null);
 
   const login = useCallback(() => {
     console.log('Checking Context Provider');
@@ -88,21 +84,25 @@ function Parent() {
 
   return (
     <DataContext.Provider value={contextValue}>
-      <View style={styles.container}>
-        <Text style={styles.text}> The count is {count}</Text>
-        <Button title="Increment" onPress={onIncrementHandler} />
-        <DecrementBtn decrementFn={onDecrementHandler} />
-        <Button title="Show Ref Count" onPress={showRefCount} />
-        <InputBar ref={ref} />
-        <Button title="Clear Input" onPress={textInputHandler} />
-        {UserListScreenM}
-      </View>
+      <SafeAreaViewWrapper>
+        <View style={styles.container}>
+          <Text style={styles.text}> The count is {count}</Text>
+          <Button title="Increment" onPress={onIncrementHandler} />
+          <DecrementBtn decrementFn={onDecrementHandler} />
+          <Button title="Show Ref Count" onPress={showRefCount} />
+          <InputBar ref={ref} />
+          <Button title="Clear Input" onPress={textInputHandler} />
+        </View>
+      </SafeAreaViewWrapper>
     </DataContext.Provider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   text: {
     fontSize: 20,
     textAlign: 'center',
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Parent;
+export default DemoScreen;

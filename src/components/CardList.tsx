@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList } from 'react-native';
 
 function CardList({ dataList, renderItem, horizontalBool = false }) {
-  console.log('Recipe list rendered');
+  // console.log('Recipe list rendered');
 
   return (
     <FlatList
@@ -10,6 +10,7 @@ function CardList({ dataList, renderItem, horizontalBool = false }) {
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
       horizontal={horizontalBool}
+      contentContainerStyle={{ flexGrow: 1 }}
     />
   );
 }

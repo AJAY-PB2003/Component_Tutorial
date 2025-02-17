@@ -2,7 +2,7 @@ import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 
 const InputBar = forwardRef(function InputBar(props, ref) {
-  let inputRef = useRef(null);
+  const inputRef = useRef(null);
 
   useImperativeHandle(
     ref,
@@ -29,6 +29,8 @@ const InputBar = forwardRef(function InputBar(props, ref) {
 const styles = StyleSheet.create({
   textBar: {
     borderWidth: 2,
+    margin: 16,
+    padding: 5,
   },
 });
 

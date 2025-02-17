@@ -1,70 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  useWindowDimensions,
-  Pressable,
-} from 'react-native';
+import React from 'react';
+import { Text, View, Image, StyleSheet, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@react-navigation/elements';
 import { profileImageUrl } from '../const/imgUrl';
+import MyHeader from '../components/MyHeader';
+import { ProfileData } from '../const/staticText';
 
 function ProfileScreen() {
-  // const navigation = useNavigation();
-  // const { width } = useWindowDimensions();
+  const navigation = useNavigation();
 
-  // const [count, setCount] = useState(0);
-
-  // //   useEffect(() => {
-  // //     console.log('component mount');
-
-  // //     return () => {
-  // //       console.log('compenent unmount');
-  // //     };
-  // //   }, []);
-
-  // useEffect(() => {
-  //   console.log('component updated', count);
-
-  //   return () => {
-  //     console.log('compenent unmount');
-  //     // console.log('effect unmounted');
-  //   };
-  // }, [count]);
-
-  // return (
-  //   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-  //     <Pressable
-  //       onPress={() => {
-  //         setCount(count + 1);
-  //       }}>
-  //       <Text>increase count</Text>
-  //     </Pressable>
-  //     <Pressable
-  //       onPress={() => {
-  //         setCount(count - 1);
-  //         //  console.log('dec count', count);
-  //       }}>
-  //       <Text>decrease count</Text>
-  //     </Pressable>
-  //     <Text>{count}</Text>
-  //   </View>
-  // );
+  const onPress = () => {
+    navigation.toggleDrawer();
+  };
 
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.image}
-        src={
-          profileImageUrl
-        }
-      />
-      <Text style={styles.title}>Ajay Jhabak</Text>
-      <Text style={styles.text}>9239939933</Text>
-      <Button style={styles.button}>View Profile</Button>
-    </View>
+    <SafeAreaView>
+      <MyHeader onPress={onPress} />
+      <View style={styles.container}>
+        <Image style={styles.image} src={profileImageUrl} />
+        <Text style={styles.title}>{ProfileData.Name}</Text>
+        <Text style={styles.text}>{ProfileData.PhoneNo}</Text>
+        <Button style={styles.button}>View Profile</Button>
+      </View>
+    </SafeAreaView>
   );
 }
 

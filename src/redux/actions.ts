@@ -1,7 +1,9 @@
-import { createAction } from "@reduxjs/toolkit";
+import { createAction } from '@reduxjs/toolkit';
 
 //Counter Actions
- export const increment = createAction('counter/increment');
- export const decrement = createAction('counter/decrement');
+const increment = createAction('counter/increment');
+const decrement = createAction('counter/decrement');
+
+export { increment, decrement };
 
 //Recipe Actions

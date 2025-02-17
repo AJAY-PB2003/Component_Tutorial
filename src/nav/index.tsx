@@ -7,24 +7,27 @@ import UserDetailsScreen from '../screens/UserDetailsScreen';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import RecipeDetailsScreen from '../screens/RecipeDetailsScreen';
 import RecipeListScreen from '../screens/RecipeListScreen';
-import MyHeader from '../components/MyHeader';
-import Parent from '../learning/Temp';
-import { icon } from '../components/iconProvider';
+import DemoScreen from '../screens/DemoScreen';
+import { CustomIcon } from '../components/CustomIcon';
+import MyTabBar from '../components/MyTabBar';
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const contactIcon = ({ color }) => icon('contacts', 30, color);
-const profileIcon = ({ color }) => icon('account', 30, color);
-const foodIcon = ({ color }) => icon('food', 30, color);
-const devIcon = ({ color }) => icon('dev-to', 30, color);
+const contactIcon = ({ color }) => (
+  <CustomIcon iconName="contacts" color={color} />
+);
+const profileIcon = ({ color }) => (
+  <CustomIcon iconName="account" color={color} />
+);
+// const foodIcon = ({ color }) => <CustomIcon iconName="food" color={color} />;
+// const devIcon = ({ color }) => <CustomIcon iconName="dev-to" color={color} />;
 
 function MyDrawer() {
   return (
     <Drawer.Navigator
       screenOptions={{
-        // header: ({ navigation }) => MyHeader((navigation = { navigation })),
         headerStyle: {
           // height:200,
         },
@@ -35,9 +38,6 @@ function MyDrawer() {
         component={StackNavigator}
         options={{
           drawerIcon: contactIcon,
-          header: ({ navigation }) => MyHeader((navigation = { navigation })),
-
-          // headerShown:false
         }}
       />
       <Drawer.Screen
@@ -50,37 +50,65 @@ function MyDrawer() {
     </Drawer.Navigator>
   );
 }
+const onTabPress = ({ navigation, route, isFocused }) => {
+  // console.log('onTabPressed');
+  const event = navigation.emit({
+    type: 'tabPress',
+    target: route.key,
+    canPreventDefault: true,
+  });
+
+  if (!isFocused && !event.defaultPrevented) {
+    navigation.navigate(route.name, route.params);
+  }
+};
+
+const TabBar = ({ navigation, state, descriptors }) => (
+  <MyTabBar
+    navigation={navigation}
+    state={state}
+    descriptors={descriptors}
+    onTabPress={onTabPress}
+  />
+);
 
 function MyTabs() {
   return (
     <Tab.Navigator
+      tabBar={TabBar}
       screenOptions={{
         headerShown: false,
       }}>
       <Tab.Screen
-        name="Users"
+        name="UserListScreen"
         component={UserListScreen}
         options={{
-          tabBarIcon: contactIcon,
+          tabBarLabel: 'Users',
           tabBarBadgeStyle: {
             backgroundColor: 'blue',
           },
         }}
       />
       <Tab.Screen
-        name="Recipies"
+        name="RecipeListScreen"
         component={RecipeListScreen}
-        options={{ tabBarIcon: foodIcon }}
+        options={{
+          tabBarLabel: 'Recipes',
+        }}
       />
       <Tab.Screen
-        name="Profile"
+        name="ProfileScreen"
         component={ProfileScreen}
-        options={{ tabBarIcon: profileIcon }}
+        options={{
+          tabBarLabel: 'Profile',
+        }}
       />
       <Tab.Screen
-        name="Demo"
-        component={Parent}
-        options={{ tabBarIcon: devIcon }}
+        name="DemoScreen"
+        component={DemoScreen}
+        options={{
+          tabBarLabel: 'Demo',
+        }}
       />
     </Tab.Navigator>
   );
@@ -90,24 +118,15 @@ function StackNavigator() {
   return (
     <Stack.Navigator
       initialRouteName="Home"
-      screenOptions={
-        {
-          // headerShown: false,
-        }
-      }>
-      <Stack.Screen
-        name="Home"
-        component={MyTabs}
-        options={{
-          // headerShown: false ,
-          header: ({ navigation }) => MyHeader((navigation = { navigation })),
-        }}
-      />
-      <Stack.Screen name="UserDetails" component={UserDetailsScreen} />
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="Home" component={MyTabs} />
+      <Stack.Screen name="UserDetailsScreen" component={UserDetailsScreen} />
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
       <Stack.Screen name="RecipeListScreen" component={RecipeListScreen} />
 
-      <Stack.Screen name="RecipeDetails" component={RecipeDetailsScreen} />
+      <Stack.Screen name="RecipeDetailsScreen" component={RecipeDetailsScreen} />
     </Stack.Navigator>
   );
 }

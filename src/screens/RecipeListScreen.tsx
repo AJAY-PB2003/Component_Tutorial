@@ -1,51 +1,35 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useDeferredValue,
-  useMemo,
-  memo,
-} from 'react';
-import { ActivityIndicator, View } from 'react-native';
-import RecipeCard from '../components/RecipeCard';
-// import { Text } from 'react-native-gesture-handler';
+import React, { useEffect, memo } from 'react';
+import { ActivityIndicator, Alert } from 'react-native';
 import SearchTextBar from '../components/SearchTextBar';
-// import { blue } from 'react-native-reanimated/lib/typescript/Colors';
-// import { debounce } from 'lodash-es';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchRecipes,
-  selectFilteredRecipes,
-  selectStatus,
-  searchFilterHandler,
-} from '../redux/slices/recipeslice';
+import { fetchRecipes, searchFilterHandler } from '../redux/slices/recipeDataSlice';
 import API_STATUS from '../const/apiStatus';
 import { Text } from 'react-native-gesture-handler';
 import CardList from '../components/CardList';
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native';
+import MyHeader from '../components/MyHeader';
+import GenericCard from '../components/GenericCard';
+import SafeAreaViewWrapper from '../components/SafeAreaViewWrapper';
 
 type ItemProps = {
-  id: string;
-  image: string;
-  name: string;
-  cuisine: string;
-  difficulty: string;
-  rating: string;
+  title: string;
+  imgUrl: string;
+  subtitle1: string;
+  subtitle2: string;
+  footerLeft: string;
+  footerRight: string;
   ingredients: object;
   instructions: object;
-  servings: number;
-  caloriesPerServing: number;
 };
-
 const MemoizedRecipeList = memo(CardList);
 
 function RecipeListScreen() {
-  // const [loading, setLoading] = useState(true);
-  // const [recipeData, setrecipeData] = useState(null);
   const dispatch = useDispatch();
-  const recipeDataStatus = useSelector(selectStatus);
-  const filteredData = useSelector(selectFilteredRecipes);
-
-  // const [filteredList, setfilteredList] = useState(filteredData);
+  const recipeDataStatus = useSelector((state) => state?.recipeData?.status);
+  // console.log(recipeDataStatus);
+  const filteredData = useSelector((state) => state?.recipeData?.filteredList);
+  const navigation = useNavigation();
 
   //used deferred value hook
   // const deferredList = useDeferredValue(filteredList);
@@ -71,12 +55,6 @@ function RecipeListScreen() {
     dispatch(fetchRecipes());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (recipeDataStatus === 'succeeded') {
-  //     setfilteredList(filteredData);
-  //   }
-  // }, [recipeDataStatus, filteredData]);
-
   // // Search logic using Debouncing
   // const debouncedFilterHandler = debounce((text) => {
   //   setfilteredList(
@@ -86,44 +64,39 @@ function RecipeListScreen() {
   //   );
   // }, 1000, {'leading':false});
 
-  // const filterHandler = (text) => {
-  //   setfilteredList(
-  //     recipeData?.filter((item) =>
-  //       item.name.toLowerCase().startsWith(text?.toLowerCase()),
-  //     ),
-  //   );
-  // };
-
   const filterHandler = (text) => {
     dispatch(searchFilterHandler(text));
   };
 
+  const onCardPress = (item) => {
+    navigation.navigate('RecipeDetailsScreen', {
+      title: item.title,
+      imgUrl: item.imgUrl,
+      instructions: item.details.instructions,
+      ingredients: item.details.ingredients,
+    });
+  };
+
+  const searchBarOnSubmit = () => {
+    Alert.alert(`Checking ...`);
+  };
+  const onHeaderPress = () => {
+    navigation.toggleDrawer();
+  };
+
   const renderItem = ({ item }: { item: ItemProps }) => {
-    const {
-      id,
-      image,
-      name,
-      cuisine,
-      difficulty,
-      rating,
-      ingredients,
-      instructions,
-      servings,
-      caloriesPerServing,
-    } = item;
+    const { title, imgUrl, subtitle1, subtitle2, footerLeft, footerRight } =
+      item;
 
     return (
-      <RecipeCard
-        recipeId={id}
-        imgUrl={image}
-        title={name}
-        cuisine={cuisine}
-        difficulty={difficulty}
-        rating={rating}
-        ingredients={ingredients}
-        instructions={instructions}
-        servings={servings}
-        calories={caloriesPerServing}
+      <GenericCard
+        title={title}
+        imgUrl={imgUrl}
+        subtitle1={subtitle1}
+        subtitle2={subtitle2}
+        footerLeft={footerLeft}
+        footerRight={footerRight}
+        onPress={() => onCardPress(item)}
       />
     );
   };
@@ -131,10 +104,10 @@ function RecipeListScreen() {
   switch (recipeDataStatus) {
     case API_STATUS.PENDING:
       return (
-        <View
+        <SafeAreaView
           style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
           <ActivityIndicator size={'large'} color={'blue'} />
-        </View>
+        </SafeAreaView>
       );
 
     case API_STATUS.ERROR:
@@ -142,10 +115,14 @@ function RecipeListScreen() {
 
     default:
       return (
-        <>
-          <SearchTextBar onChangeText={filterHandler} />
+        <SafeAreaViewWrapper>
+          <MyHeader onPress={onHeaderPress} />
+          <SearchTextBar
+            onChangeText={filterHandler}
+            onSubmit={searchBarOnSubmit}
+          />
           <MemoizedRecipeList dataList={filteredData} renderItem={renderItem} />
-        </>
+        </SafeAreaViewWrapper>
       );
   }
 }

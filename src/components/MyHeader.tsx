@@ -1,43 +1,37 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { CustomIcon } from './CustomIcon';
 
-function MyHeader({ navigation }) {
-  const onPress = () => {
-    // console.log(navigation.toggleDrawer);
-    navigation.toggleDrawer();
-  };
+function MyHeader({ onPress, title = 'Home', iconName = 'dots-grid' }) {
   return (
-    // <SafeAreaView>
     <View style={styles.container}>
-      <Pressable style={styles.icon} onPress={onPress}>
-        <Icon  name="dots-grid" size={30} />
+      <Text style={styles.heading}> {title}</Text>
+      <Pressable style={styles.iconContainer} onPress={onPress}>
+        <CustomIcon iconName={iconName} color={'black'} />
       </Pressable>
-      <Text style={styles.heading}> Home</Text>
     </View>
-    //  </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: 50,
+    padding: 16,
+    paddingBottom: 8,
+    paddingTop: 8,
+    backgroundColor: 'lightgrey',
     alignItems: 'center',
-    justifyContent:'center',
-    backgroundColor:'lightgrey',
-    // borderRadius:5
+    justifyContent: 'center',
   },
-  icon: {
-    // paddingLeft: 16,
-    position:'absolute',
-    left:16
+  iconContainer: {
+    position: 'absolute',
+    left: 16,
+    alignSelf: 'center',
   },
   heading: {
     fontSize: 23,
-    fontFamily:'Roboto-Bold'
-
+    fontFamily: 'Roboto-Bold',
+    textAlign: 'center',
   },
 });
 

@@ -1,16 +1,13 @@
 import React from 'react';
-import { TextInput, Alert, View, StyleSheet } from 'react-native';
+import { TextInput, View, StyleSheet } from 'react-native';
 
-function SearchTextBar({ onChangeText }) {
-  const onSubmit = () => {
-    Alert.alert(`Checking ...`);
-  };
+function SearchTextBar({ onChangeText, onSubmit }) {
   return (
     <View style={searchBarStyles.container}>
       <TextInput
         style={searchBarStyles.textBar}
         placeholder="Search the recipe here"
-        autoCapitalize={'none'}
+        autoCapitalize="none"
         onChangeText={onChangeText}
         onSubmitEditing={onSubmit}
         clearButtonMode="while-editing"

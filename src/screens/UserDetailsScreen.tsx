@@ -1,27 +1,31 @@
 import React from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import UserDetails from '../components/UserDetails';
-import { DATA } from '../const/data';
 import ReviewList from '../container/ReviewsList';
+import MyHeader from '../components/MyHeader';
+import { SafeAreaView, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 function UserDetailsScreen({ route }) {
-  const targetId = route.params;
-  const user = DATA.find((item) => item.id === targetId.id);
+  const navigation = useNavigation();
+  const onPress = () => {
+    navigation.goBack();
+  };
+
+  const user = route.params;
+  const onSubmit = () => {
+    // setReview('');
+    Alert.alert('Your Review Successfully Submitted');
+  };
 
   return (
-    <ScrollView>
-      {user ? (
-        <UserDetails
-          imgUrl={user.imgUrl}
-          name={user.title}
-          address={user.address}
-          aboutUs={user.aboutUs}
-          phoneNo={user.phoneNo}
-          email={user.email}
-        />
-      ) : null}
-      <ReviewList />
-    </ScrollView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <MyHeader onPress={onPress} title="User Details" iconName="arrow-left" />
+      <ScrollView>
+        <UserDetails user={user} onSubmit={onSubmit} />
+        <ReviewList />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
