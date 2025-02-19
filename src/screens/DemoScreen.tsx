@@ -14,8 +14,9 @@ import {
   increment,
   selectCount,
   decrement,
-} from '../redux/slices/counterslice';
+} from '../redux/slices/counterSlice';
 import SafeAreaViewWrapper from '../components/SafeAreaViewWrapper';
+import { asyncIncrement } from '../redux/actions';
 
 export const DataContext = createContext('Search Here');
 
@@ -74,6 +75,11 @@ function DemoScreen() {
   const onIncrementHandler = () => {
     dispatch(increment());
   };
+
+  const onAsyncIncrementHandler = () => {
+    dispatch(asyncIncrement());
+  };
+
   const onDecrementHandler = () => {
     dispatch(decrement());
   };
@@ -88,6 +94,10 @@ function DemoScreen() {
         <View style={styles.container}>
           <Text style={styles.text}> The count is {count}</Text>
           <Button title="Increment" onPress={onIncrementHandler} />
+          <Button
+            title="Increment after 1 sec"
+            onPress={onAsyncIncrementHandler}
+          />
           <DecrementBtn decrementFn={onDecrementHandler} />
           <Button title="Show Ref Count" onPress={showRefCount} />
           <InputBar ref={ref} />

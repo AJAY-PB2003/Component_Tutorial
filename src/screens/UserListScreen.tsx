@@ -7,7 +7,7 @@ import SafeAreaViewWrapper from '../components/SafeAreaViewWrapper';
 import GenericCard from '../components/GenericCard';
 import { useDispatch, useSelector } from 'react-redux';
 import API_STATUS from '../const/apiStatus';
-import { fetchUsers } from '../redux/slices/userDataSlice';
+import { deleteUser, fetchUsers } from '../redux/users/action';
 
 type ItemProps = {
   id: string;
@@ -21,9 +21,9 @@ type ItemProps = {
 };
 
 function UserListScreen() {
-  const userDataStatus = useSelector((state) => state?.userData?.status);
+  const userDataStatus = useSelector((state) => state?.user?.status);
   // console.log(userDataStatus);
-  const usersList = useSelector((state) => state?.userData?.usersList);
+  const usersList = useSelector((state) => state?.user?.usersList);
   // console.log(usersList);
   const dispatch = useDispatch();
 
@@ -42,6 +42,10 @@ function UserListScreen() {
       aboutUser: item.details.aboutUser,
     });
   };
+
+  const onDeleteHandler = (id) => {
+    dispatch(deleteUser(id));
+  };
   const renderItem = ({ item }: { item: ItemProps }) => {
     const { imgUrl, title, subtitle1, subtitle2, footerLeft, footerRight } =
       item;
@@ -55,6 +59,8 @@ function UserListScreen() {
         footerLeft={footerLeft}
         footerRight={footerRight}
         onPress={() => onCardPress(item)}
+        onDeleteHandler={() => onDeleteHandler(item.id)}
+        shadowShowbool={true}
       />
     );
   };

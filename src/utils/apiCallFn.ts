@@ -17,7 +17,9 @@ const apiCallFn = async (url, config) => {
 
   if (config.method) {
     options.method = config.method;
-    options.body = config.body;
+    if (config.method !== 'GET') {
+      options.body = config.body;
+    }
   }
   // console.log(options);
 

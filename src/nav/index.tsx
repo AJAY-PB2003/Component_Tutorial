@@ -126,7 +126,10 @@ function StackNavigator() {
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
       <Stack.Screen name="RecipeListScreen" component={RecipeListScreen} />
 
-      <Stack.Screen name="RecipeDetailsScreen" component={RecipeDetailsScreen} />
+      <Stack.Screen
+        name="RecipeDetailsScreen"
+        component={RecipeDetailsScreen}
+      />
     </Stack.Navigator>
   );
 }

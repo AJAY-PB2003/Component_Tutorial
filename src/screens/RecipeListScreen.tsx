@@ -2,7 +2,11 @@ import React, { useEffect, memo } from 'react';
 import { ActivityIndicator, Alert } from 'react-native';
 import SearchTextBar from '../components/SearchTextBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRecipes, searchFilterHandler } from '../redux/slices/recipeDataSlice';
+import {
+  deleteRecipe,
+  fetchRecipes,
+  filterRecipes,
+} from '../redux/recipes/action';
 import API_STATUS from '../const/apiStatus';
 import { Text } from 'react-native-gesture-handler';
 import CardList from '../components/CardList';
@@ -13,6 +17,7 @@ import GenericCard from '../components/GenericCard';
 import SafeAreaViewWrapper from '../components/SafeAreaViewWrapper';
 
 type ItemProps = {
+  id: string;
   title: string;
   imgUrl: string;
   subtitle1: string;
@@ -26,9 +31,11 @@ const MemoizedRecipeList = memo(CardList);
 
 function RecipeListScreen() {
   const dispatch = useDispatch();
-  const recipeDataStatus = useSelector((state) => state?.recipeData?.status);
+  const recipeDataStatus = useSelector((state) => state?.recipes?.status);
   // console.log(recipeDataStatus);
-  const filteredData = useSelector((state) => state?.recipeData?.filteredList);
+  const filteredData = useSelector(
+    (state) => state?.recipes?.filteredRecipesList,
+  );
   const navigation = useNavigation();
 
   //used deferred value hook
@@ -65,7 +72,7 @@ function RecipeListScreen() {
   // }, 1000, {'leading':false});
 
   const filterHandler = (text) => {
-    dispatch(searchFilterHandler(text));
+    dispatch(filterRecipes(text));
   };
 
   const onCardPress = (item) => {
@@ -75,6 +82,10 @@ function RecipeListScreen() {
       instructions: item.details.instructions,
       ingredients: item.details.ingredients,
     });
+  };
+
+  const onDeleteHandler = (id) => {
+    dispatch(deleteRecipe(id));
   };
 
   const searchBarOnSubmit = () => {
@@ -97,6 +108,8 @@ function RecipeListScreen() {
         footerLeft={footerLeft}
         footerRight={footerRight}
         onPress={() => onCardPress(item)}
+        onDeleteHandler={() => onDeleteHandler(item.id)}
+        shadowShowbool={false}
       />
     );
   };
