@@ -6,11 +6,12 @@ function CardList({ dataList, renderItem, horizontalBool = false }) {
 
   return (
     <FlatList
+      // style={{ paddingTop: 16 }}
       data={dataList}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
       horizontal={horizontalBool}
-      contentContainerStyle={{ flexGrow: 1 }}
+      contentContainerStyle={{ flexGrow: 1 ,paddingVertical:16}}
     />
   );
 }

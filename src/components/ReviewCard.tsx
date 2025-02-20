@@ -23,13 +23,14 @@ const reviewCardStyles = StyleSheet.create({
   },
   heading: {
     fontSize: 20,
-    fontFamily: 'Roboto-bold',
+    fontFamily: 'Roboto-Bold',
     textAlign: 'center',
   },
   text: {
     fontSize: 14,
     paddingTop: 10,
     fontFamily: 'Merriweather-Regular',
+    // fontFamily:'Roboto-Bold'
   },
 });
 

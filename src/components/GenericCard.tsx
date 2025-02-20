@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: 'lightgray',
     marginHorizontal: 16,
-    marginTop: 16,
+    // marginTop: 16,
+    marginBottom: 16,
     padding: 16,
     borderRadius: 16,
   },

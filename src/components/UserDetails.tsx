@@ -63,7 +63,7 @@ const userDetailsStyles = StyleSheet.create({
   },
   heading: {
     fontSize: 24,
-    fontFamily: 'Roboto-bold',
+    fontFamily: 'Roboto-Bold',
     marginBottom: 10,
   },
   title: {

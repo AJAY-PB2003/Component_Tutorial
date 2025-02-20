@@ -59,7 +59,7 @@ const userDetailsStyles = StyleSheet.create({
   },
   heading: {
     fontSize: 22,
-    fontFamily: 'Roboto-bold',
+    fontFamily: 'Roboto-Bold',
     paddingBottom: 10,
     paddingTop: 10,
     textAlign: 'center',

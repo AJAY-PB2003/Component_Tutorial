@@ -1,6 +1,6 @@
-import React, { useEffect, memo } from 'react';
-import { ActivityIndicator, Alert } from 'react-native';
-import SearchTextBar from '../components/SearchTextBar';
+import React, { useEffect, memo, useRef } from 'react';
+import { ActivityIndicator, Alert, View } from 'react-native';
+import SearchBar from '../components/SearchBar';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteRecipe,
@@ -38,6 +38,12 @@ function RecipeListScreen() {
   );
   const navigation = useNavigation();
 
+  const inputRef = useRef(null);
+  const onClear = () => {
+    inputRef?.current?.clear();
+    dispatch(filterRecipes(''));
+  };
+
   //used deferred value hook
   // const deferredList = useDeferredValue(filteredList);
   // console.log(recipeData);
@@ -72,6 +78,8 @@ function RecipeListScreen() {
   // }, 1000, {'leading':false});
 
   const filterHandler = (text) => {
+    // inputRef.current.value=text;
+    inputRef.current.setError(null);
     dispatch(filterRecipes(text));
   };
 
@@ -88,8 +96,12 @@ function RecipeListScreen() {
     dispatch(deleteRecipe(id));
   };
 
-  const searchBarOnSubmit = () => {
-    Alert.alert(`Checking ...`);
+  const searchBarOnSubmit = ({ nativeEvent: { text } }) => {
+    if (text) {
+      Alert.alert(`Looking for :- ${text} `);
+    } else {
+      inputRef.current.setError('Please Enter Something');
+    }
   };
   const onHeaderPress = () => {
     navigation.toggleDrawer();
@@ -130,7 +142,10 @@ function RecipeListScreen() {
       return (
         <SafeAreaViewWrapper>
           <MyHeader onPress={onHeaderPress} />
-          <SearchTextBar
+          <SearchBar
+            placeholder="Search the recipe here"
+            ref={inputRef}
+            onClear={onClear}
             onChangeText={filterHandler}
             onSubmit={searchBarOnSubmit}
           />
